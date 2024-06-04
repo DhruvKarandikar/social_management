@@ -11,7 +11,7 @@ def get_request():
 
 
 class CustomMiddleware:
-    
+
     def __init__(self, get_response):
         self.get_response = get_response
 

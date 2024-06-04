@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from datetime import timedelta
+from social_user_management.custom_helpers.consts import LIFE_TIME_OF_ACCESS_TOKEN, LIFE_TIME_OF_REFRESH_TOKEN
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -67,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_user_management.custom_helpers.jwt_token.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'Social_Platform.urls'
@@ -146,3 +149,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SIMPLE_JWT = {
+    'REFRESH_TOKEN_LIFETIME': LIFE_TIME_OF_REFRESH_TOKEN,
+    'ACCESS_TOKEN_LIFETIME': LIFE_TIME_OF_ACCESS_TOKEN
+}

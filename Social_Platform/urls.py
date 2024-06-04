@@ -36,5 +36,8 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('v1/social_management/admin/', admin.site.urls),
+    path('v1/social_management/', include('social_user_management.urls')),
+    path('v1/social_management/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('v1/social_management/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

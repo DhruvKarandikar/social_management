@@ -4,6 +4,7 @@ from django.utils import timezone
 from rest_framework.serializers import ModelSerializer
 import datetime
 from functools import wraps
+import hashlib
 from django.db import models
 from django.core.exceptions import FieldError
 from django.db.models.fields.related import ForeignKey, OneToOneField, ManyToManyField, ManyToOneRel, ManyToManyRel, OneToOneRel
@@ -13,6 +14,7 @@ from typing import Any, Type
 from social_user_management.custom_helpers.jwt_token import get_request
 from social_user_management.custom_helpers.status_code import *
 import logging
+import jwt
 
 logger = logging.getLogger('django')
 
@@ -48,7 +50,7 @@ def create_update_model_serializer(model_serializer: ModelSerializer, data: dict
         serializer = model_serializer(instance, data=data, partial=True, context=additional_data)
     else:
         serializer = model_serializer(data=data, partial=partial, context=additional_data)
-        
+
     if not serializer.is_valid():
         logger.error(f"error in serilizer is {serializer.errors}")
         raise CustomExceptionHandler(error_in_serializer(model_serializer))
@@ -374,3 +376,25 @@ def common_checking_and_passing_value_from_list_dict(value, list_dict, error_lab
                     
             return list_dict[value]
     return value
+
+def salt_and_hash(prefix, credential):
+    return hashlib.sha256((prefix + credential + SALTING_CONSTANT).encode()).hexdigest()
+
+def generate_token_pair(user_object, get_access_token=True, get_refresh_token=True, access_token_extra_data = {}):
+    
+    user_obj = user_object.first()
+
+    access_token_payload = {"user_id": user_obj.uuid_user, "sub": "access_token", "username": user_obj.username}
+    refresh_token_payload = {"user_id": user_obj.uuid_user, "sub": "refresh_token"}
+    
+    access_token, refresh_token= None, None
+    access_token_payload.update(access_token_extra_data)
+
+    if get_access_token:
+        access_token = jwt.encode(payload=access_token_payload, key = JWT_KEY_PRIVATE, algorithm=ALGORITHM_OF_JWT)
+
+    if get_refresh_token:
+        refresh_token = jwt.encode(
+            payload=refresh_token_payload, key = JWT_KEY_PRIVATE, algorithm=ALGORITHM_OF_JWT)
+        
+    return access_token, refresh_token
