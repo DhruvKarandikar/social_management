@@ -49,3 +49,9 @@ gender_dict = {
     "female": 2
 }
 
+friend_acceptance_state = {
+    "pending": 0,
+    "accepted": 1,
+    "rejected": 2
+}
+

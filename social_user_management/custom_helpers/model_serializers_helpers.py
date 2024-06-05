@@ -398,3 +398,11 @@ def generate_token_pair(user_object, get_access_token=True, get_refresh_token=Tr
             payload=refresh_token_payload, key = JWT_KEY_PRIVATE, algorithm=ALGORITHM_OF_JWT)
         
     return access_token, refresh_token
+
+
+def validate_token(request):
+    data = get_request()
+
+    if not data.headers.get('Authorization'):
+        raise CustomExceptionHandler(generic_error_4)
+    return data
