@@ -4,6 +4,7 @@ Social Management of any interative site mainly consists of microservices with a
 The user management consist of authenticating a user so that they can interact with their friends can made comments on their posts and so on.
 The Project here mainly focuses on the user Authentication and relation to searching and sending friends requests to their specific friends.
 All the API's are made to interact to the user who are Logged in and can search or their friends and can send friend request to them
+If you have doubts feel free to connect on email: dhruvkarandikar122@gmail.com || mob: 9130249440
 
 Installation steps:
 
@@ -74,6 +75,12 @@ step 5:
     After interacting with sign in API you will be returned a access token.
     From this access token You have to go to that Lock sign click it 
     SEND: Bearer {access token} NOTE: there is a space between the BEARER word and access token and B will be  capital letter
+
+Example for swagger Like this onto the Lock given at the end of API url
+
+    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+
+    
 
     POSTMAN settings:
     
