@@ -1,0 +1,75 @@
+version: "3.12.3"
+
+services:
+  app:
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/django
+    image: app:django
+    container_name: docker_project_container
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: pg_container
+    command: postgres -c 'max_connections=100'
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    env_file:
+      - .env
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container
+    restart: always
+    ports:
+      - "5050:80"
+    env_file:
+      - .env
+    volumes:
+      - postgres_admin:/var/lib/postgresql/data/admin
+  
+  server:
+    build: .
+    restart: always
+    container_name: django_container
+    links:
+      - postgres:postgres
+      - pgadmin:pgadmin
+    depends_on:
+      - postgres
+      - pgadmin
+    env_file:
+      - .env
+    volumes:
+      - ./:/projectdirname
+    ports:
+      - '8000:8000'
+
+volumes:
+  postgres_db:
+  postgres_admin:
+    
+#   web:
+#       build: .
+#       command: >
+#           python manage.py makemigrations && 
+#           python manage.py migrate &&
+#           python manage.py runserver
+          
+#       volumes:
+#         - ./data:/data
+#       depends_on:
+#         - db
+#       environment: 
+#         IN_DOCKER: 1
+#       ports:
+#         - "8000:8000"
+
+# volumes:
+#     postgres_data:

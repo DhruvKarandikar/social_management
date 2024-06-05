@@ -26,16 +26,39 @@ DATABASES = {
 
 step 3: After connecting to the database. Use this commands to use API's commands:
 
+Command will create the virtual environment for project
+
+        python -m venv env
+
+Use this command to activate environment
+
+Windows:
+
+        CMD: .\env\Scripts\activate
+
+Mac OS:
+
+        src ~/env/Scripts/activate
+
+Download the requirements file
+        
+        pip install -r requirements.txt
+
+Command for migrating the database into your local computer
+
         python manage.py migrate
+
+Running the server
+
         python manage.py runserver
 
 step 4: After connecting to the server and running the project you will get the local host link in terminal having 8000 port.
-        You will see a page with more extension to the URL's: 
-        Kindly go to the URL's which are swagger basis as the postman will do the same as the swagger:
-        
-        NOTE: This link will make you to interactive site where API are interactive if postman not installed.
-              Recommended Swagger as it will allow you to see the json format. In postman you have to send 
-              the API and see the JSON from the code.
+You will see a page with more extension to the URL's: 
+Kindly go to the URL's which are swagger basis as the postman will do the same as the swagger:
+
+NOTE: This link will make you to interactive site where API are interactive if postman not installed.
+Recommended Swagger as it will allow you to see the json format. In postman you have to send 
+the API and see the JSON from the code.
         
         Swagger in browser: 
         http://127.0.0.1:8000/v1/social_management/swagger/
@@ -45,18 +68,19 @@ step 4: After connecting to the server and running the project you will get the 
 
 step 5: 
        
-       Swagger Settings:
+    Swagger Settings:
        
-       If the user is signed up then in swagger setting there is a looked designed at the end of the API URL name 
-       After interacting with sign in API you will be returned a access token.
-       From this access token You have to go to that Lock sign click it 
-       SEND: Bearer {access token} NOTE: there is a space between the BEARER word and access token and B will be  capital letter
+    If the user is signed up then in swagger setting there is a looked designed at the end of the API URL name 
+    After interacting with sign in API you will be returned a access token.
+    From this access token You have to go to that Lock sign click it 
+    SEND: Bearer {access token} NOTE: there is a space between the BEARER word and access token and B will be  capital letter
 
-      POSTman settings:
-      In authorization select Bearer Token and then in value use this {access token} and then HIT the API like search api 
-      as they are allowed for only authenticated users
+    POSTMAN settings:
+    
+    In authorization select Bearer Token and then in value use this {access token} and then HIT the API like search api 
+    as they are allowed for only authenticated users
 
-      If not they you are unauthorized as you didnt send the Bearer JWT Token in headers
+    If not they you are unauthorized as you didnt send the Bearer JWT Token in headers
 
 step 6:
 
